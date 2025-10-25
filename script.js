@@ -1,5 +1,4 @@
 const TASKS = [
-  // HTML-only 1–30
   {id:1,title:"Hello world Page",cat:"html"},
   {id:2,title:"Personal Bio Page",cat:"html"},
   {id:3,title:"Favorite Links Page",cat:"html"},
@@ -30,7 +29,6 @@ const TASKS = [
   {id:28,title:"Accessibility Showcase",cat:"html"},
   {id:29,title:"Glossary with dl",cat:"html"},
   {id:30,title:"Microdata / Structured Data Page",cat:"html"},
-  // CSS roadmap 31–50
   {id:31,title:"Styled Bio Page",cat:"css"},
   {id:32,title:"Recipe Card",cat:"css"},
   {id:33,title:"Navigation Bar",cat:"css"},
@@ -53,34 +51,69 @@ const TASKS = [
   {id:50,title:"Final Capstone: Personal Portfolio v1",cat:"css"},
 ];
 
-const KEY="tracker50"; 
-const state=JSON.parse(localStorage.getItem(KEY)||"{}");
-const save=()=>localStorage.setItem(KEY,JSON.stringify(state));
+const KEY="tracker50";
+const state = JSON.parse(localStorage.getItem(KEY) || "{}");
+const save = () => localStorage.setItem(KEY, JSON.stringify(state));
 
-const grid=document.getElementById("grid");
-const search=document.getElementById("search");
-const category=document.getElementById("category");
-const status=document.getElementById("status");
-const count=document.getElementById("count");
-const ratio=document.getElementById("ratio");
-const barFill=document.getElementById("barFill");
+const grid = document.getElementById("grid");
+const search = document.getElementById("search");
+const category = document.getElementById("category");
+const status = document.getElementById("status");
+const count = document.getElementById("count");
+const ratio = document.getElementById("ratio");
+const barFill = document.getElementById("barFill");
 
 function matches(t){
   const q=(search.value||"").toLowerCase();
-  const byText=!q||t.title.toLowerCase().includes(q)||String(t.id).includes(q);
-  const byCat=category.value==="all"||t.cat===category.value;
+  const byText=!q || t.title.toLowerCase().includes(q) || String(t.id).includes(q);
+  const byCat=category.value==="all" || t.cat===category.value;
   const done=!!state[t.id]?.done;
-  const byStatus=status.value==="all"||(status.value==="done"?done:!done);
-  return byText&&byCat&&byStatus;
+  const byStatus=status.value==="all" || (status.value==="done" ? done : !done);
+  return byText && byCat && byStatus;
 }
 
 function render(){
   grid.innerHTML="";
-  const visible=TASKS.filter(matches);
-  const totalDone=TASKS.filter(t=>state[t.id]?.done).length;
-  const pct=Math.round(totalDone/TASKS.length*100);
-  count.textContent=`${visible.length} shown • ${totalDone}/${TASKS.length} completed`;
-  ratio.textContent=`${pct}% complete`;
-  barFill.style.width=pct+"%";
+  const visible = TASKS.filter(matches);
+  const totalDone = TASKS.filter(t => state[t.id]?.done).length;
+  const pct = Math.round((totalDone / TASKS.length) * 100);
+  count.textContent = `${visible.length} shown • ${totalDone}/${TASKS.length} completed`;
+  ratio.textContent = `${pct}% complete`;
+  barFill.style.width = pct + "%";
 
-  visible.forEach
+  visible.forEach(t=>{
+    const s = state[t.id] || {};
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <div class="row">
+        <label><input type="checkbox" id="chk-${t.id}" ${s.done ? "checked" : ""}/> #${t.id} ${t.title}</label>
+      </div>
+      <div class="tags"><span class="tag">${t.cat.toUpperCase()}</span></div>
+      <textarea id="note-${t.id}" placeholder="Notes"></textarea>
+    `;
+    grid.appendChild(card);
+
+    card.querySelector(`#chk-${t.id}`).addEventListener("change", (e)=>{
+      state[t.id] = state[t.id] || {};
+      state[t.id].done = e.target.checked;
+      save(); render();
+    });
+
+    const note = card.querySelector(`#note-${t.id}`);
+    note.value = s.note || "";
+    note.addEventListener("input", (e)=>{
+      state[t.id] = state[t.id] || {};
+      state[t.id].note = e.target.value;
+      save();
+    });
+  });
+}
+
+["input","change"].forEach(evt=>{
+  search.addEventListener(evt, render);
+  category.addEventListener(evt, render);
+  status.addEventListener(evt, render);
+});
+
+render();
