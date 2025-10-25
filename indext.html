@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>50‑Lesson Progress Tracker</title>
+  <meta name="description" content="Track your progress through 50 HTML & CSS lessons with a clean web app.">
+  <!-- Inline </> favicon -->
+  <link rel="icon" href="data:image/svg+xml,
+    %3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E
+    %3Crect width='64' height='64' rx='8' fill='%23111'/%3E
+    %3Ctext x='50%25' y='50%25' font-size='28' font-family='monospace'
+      fill='%23fff' text-anchor='middle' dominant-baseline='middle'%3E%3C/%3E%3E" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="wrap">
+    <h1>50‑Lesson Progress Tracker</h1>
+    <div class="controls">
+      <input id="search" type="search" placeholder="Search projects…" class="control"/>
+      <select id="category" class="control">
+        <option value="all">All categories</option>
+        <option value="html">HTML‑only (1–30)</option>
+        <option value="css">CSS roadmap (31–50)</option>
+      </select>
+      <select id="status" class="control">
+        <option value="all">All status</option>
+        <option value="done">Completed</option>
+        <option value="todo">Not completed</option>
+      </select>
+    </div>
+    <div class="stats"><span id="count"></span> • <span id="ratio"></span></div>
+    <div class="bar"><span id="barFill"></span></div>
+    <div class="grid" id="grid"></div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
