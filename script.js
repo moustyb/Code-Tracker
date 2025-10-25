@@ -1,119 +1,117 @@
-const TASKS = [
-  {id:1,title:"Hello world Page",cat:"html"},
-  {id:2,title:"Personal Bio Page",cat:"html"},
-  {id:3,title:"Favorite Links Page",cat:"html"},
-  {id:4,title:"Simple Contact Page",cat:"html"},
-  {id:5,title:"Basic Recipe Page",cat:"html"},
-  {id:6,title:"Contact Form Page",cat:"html"},
-  {id:7,title:"Weekly Schedule Table",cat:"html"},
-  {id:8,title:"Image Gallery",cat:"html"},
-  {id:9,title:"Multilingual Page",cat:"html"},
-  {id:10,title:"Resume Page",cat:"html"},
-  {id:11,title:"Blog Post Page",cat:"html"},
-  {id:12,title:"Navigation Menu Page",cat:"html"},
-  {id:13,title:"FAQ Page",cat:"html"},
-  {id:14,title:"Product Page",cat:"html"},
-  {id:15,title:"Portfolio Index Page",cat:"html"},
-  {id:16,title:"FAQ Page with details/summary",cat:"html"},
-  {id:17,title:"Event Invitation Page",cat:"html"},
-  {id:18,title:"Newsletter Signup Page",cat:"html"},
-  {id:19,title:"Audio & Video Showcase",cat:"html"},
-  {id:20,title:"Accessibility Demo Page",cat:"html"},
-  {id:21,title:"Bookstore Catalog Page",cat:"html"},
-  {id:22,title:"Favorite Quotes Page",cat:"html"},
-  {id:23,title:"Glossary Page",cat:"html"},
-  {id:24,title:"Embedded Map Page",cat:"html"},
-  {id:25,title:"Multi‑Page Mini Site",cat:"html"},
-  {id:26,title:"Form with fieldset/legend/datalist",cat:"html"},
-  {id:27,title:"Progress & Meter Demo",cat:"html"},
-  {id:28,title:"Accessibility Showcase",cat:"html"},
-  {id:29,title:"Glossary with dl",cat:"html"},
-  {id:30,title:"Microdata / Structured Data Page",cat:"html"},
-  {id:31,title:"Styled Bio Page",cat:"css"},
-  {id:32,title:"Recipe Card",cat:"css"},
-  {id:33,title:"Navigation Bar",cat:"css"},
-  {id:34,title:"Image Gallery with Borders",cat:"css"},
-  {id:35,title:"Resume with Sections",cat:"css"},
-  {id:36,title:"Contact Form Styling",cat:"css"},
-  {id:37,title:"Blog Post Layout",cat:"css"},
-  {id:38,title:"Product Page with Cards",cat:"css"},
-  {id:39,title:"Portfolio Index Page (Styled)",cat:"css"},
-  {id:40,title:"Responsive Mini-Site",cat:"css"},
-  {id:41,title:"Styled Digital Resume",cat:"css"},
-  {id:42,title:"Landing Page",cat:"css"},
-  {id:43,title:"Pricing Table",cat:"css"},
-  {id:44,title:"Blog Layout",cat:"css"},
-  {id:45,title:"Image Gallery with CSS Grid",cat:"css"},
-  {id:46,title:"Contact Form Page (Styled)",cat:"css"},
-  {id:47,title:"Portfolio Showcase",cat:"css"},
-  {id:48,title:"Restaurant Menu Page",cat:"css"},
-  {id:49,title:"Multi‑Page Personal Website",cat:"css"},
-  {id:50,title:"Final Capstone: Personal Portfolio v1",cat:"css"},
-];
+// Day/Night mode
+(function setDayNight(){
+  const h = new Date().getHours();
+  document.body.classList.add(h>=7 && h<19 ? "day" : "night");
+})();
 
-const KEY="tracker50";
+// Feather-like inline SVG icons
+const ICONS = {
+  search:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>`,
+  filter:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <polygon points="22 3 2 3 10 12 10 19 14 21 14 12 22 3"></polygon></svg>`,
+  check:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <polyline points="20 6 9 17 4 12"></polyline></svg>`,
+  trash:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1 14H6L5 6m5-3h4"></path></svg>`,
+  download:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+    <polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>`,
+  upload:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+    <polyline points="7 10 12 5 17 10"></polyline><line x1="12" y1="5" x2="12" y2="21"></line></svg>`,
+  sparkles:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M12 3l2 4 4 2-4 2-2 4-2-4-4-2 4-2 2-4z"></path></svg>`,
+  folder:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M3 7h5l2 2h11v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>`,
+  layout:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect>
+    <rect x="3" y="14" width="18" height="7"></rect></svg>`,
+  database:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 5v6c0 1.7-4 3-9 3s-9-1.3-9-3V5m0 6v6c0 1.7 4 3 9 3s9-1.3 9-3v-6"></path></svg>`,
+  flag:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M4 4v16"></path><path d="M6 4h11l-1.5 3L17 10H6z"></path></svg>`,
+  link:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"></path>
+    <path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"></path></svg>`
+};
+
+// Seed tasks (50 total)
+const TASKS = [ /* ... same TASKS array from your original code ... */ ];
+
+// Storage
+const KEY="notion-program-tracker-v1";
 const state = JSON.parse(localStorage.getItem(KEY) || "{}");
-const save = () => localStorage.setItem(KEY, JSON.stringify(state));
+const save=()=>localStorage.setItem(KEY, JSON.stringify(state));
+const getTaskState = (id)=>state[id]||{done:false,note:"",links:[],ts:null};
 
-const grid = document.getElementById("grid");
-const search = document.getElementById("search");
-const category = document.getElementById("category");
-const status = document.getElementById("status");
-const count = document.getElementById("count");
-const ratio = document.getElementById("ratio");
-const barFill = document.getElementById("barFill");
+// Motivational quotes
+const quotes = {
+  25: "💡 \"First, solve the problem. Then, write the code.\" — John Johnson",
+  50: "🏁 \"The best way to get a project done faster is to start sooner.\" — Jim Highsmith",
+  75: "📘 \"Good code is its own best documentation.\" — Steve McConnell",
+  100:"🔥 \"I have not failed. I've just found 10,000 ways that won't work.\" — Thomas Edison"
+};
+if (!state._shown) { state._shown = {}; save(); }
 
-function matches(t){
+// Learning time tracker
+if (!localStorage.getItem("trackerStart")) {
+  localStorage.setItem("trackerStart", Date.now());
+}
+const startTime = parseInt(localStorage.getItem("trackerStart"), 10);
+function formatDuration(ms){
+  const mins = Math.floor(ms/60000), hrs = Math.floor(mins/60);
+  return hrs>0 ? `${hrs}h ${mins%60}m` : `${mins}m`;
+}
+
+// DOM refs
+const search=document.getElementById("search");
+const category=document.getElementById("category");
+const status=document.getElementById("status");
+const count=document.getElementById("count");
+const ratio=document.getElementById("ratio");
+const barFill=document.getElementById("barFill");
+const importFile=document.getElementById("importFile");
+const timeEl=document.getElementById("time");
+
+// Render icons
+document.querySelectorAll("[data-icon]").forEach(el=>{
+  const name=el.getAttribute("data-icon");
+  el.innerHTML = ICONS[name] || "";
+});
+
+const sections = {
+  foundation: document.getElementById("grid-foundation"),
+  frontend: document.getElementById("grid-frontend"),
+  backend: document.getElementById("grid-backend"),
+  project: document.getElementById("grid-project"),
+};
+
+function matchesFilters(t){
   const q=(search.value||"").toLowerCase();
-  const byText=!q || t.title.toLowerCase().includes(q) || String(t.id).includes(q);
-  const byCat=category.value==="all" || t.cat===category.value;
-  const done=!!state[t.id]?.done;
-  const byStatus=status.value==="all" || (status.value==="done" ? done : !done);
+  const byText=!q || t.title.toLowerCase().includes(q) || String(t.id).includes(q) || t.tags.some(x=>x.toLowerCase().includes(q));
+  const byCat = category.value==="all" || t.category===category.value;
+  const done = !!getTaskState(t.id).done;
+  const byStatus = status.value==="all" || (status.value==="done" ? done : !done);
   return byText && byCat && byStatus;
 }
 
 function render(){
-  grid.innerHTML="";
-  const visible = TASKS.filter(matches);
-  const totalDone = TASKS.filter(t => state[t.id]?.done).length;
-  const pct = Math.round((totalDone / TASKS.length) * 100);
+  Object.values(sections).forEach(sec=>sec.innerHTML="");
+  const visible = TASKS.filter(matchesFilters);
+
+  // Stats
+  const totalDone = TASKS.filter(t=>getTaskState(t.id).done).length;
+  const pct = Math.round((totalDone/TASKS.length)*100);
   count.textContent = `${visible.length} shown • ${totalDone}/${TASKS.length} completed`;
-  ratio.textContent = `${pct}% complete`;
-  barFill.style.width = pct + "%";
+  ratio.textContent = `Progress ${pct}%`;
+  barFill.style.width = pct+"%";
 
-  visible.forEach(t=>{
-    const s = state[t.id] || {};
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
-      <div class="row">
-        <label><input type="checkbox" id="chk-${t.id}" ${s.done ? "checked" : ""}/> #${t.id} ${t.title}</label>
-      </div>
-      <div class="tags"><span class="tag">${t.cat.toUpperCase()}</span></div>
-      <textarea id="note-${t.id}" placeholder="Notes"></textarea>
-    `;
-    grid.appendChild(card);
+  // Learning time
+  const elapsed = Date.now() - startTime;
+  timeEl.textContent = `Learning time ${formatDuration(elapsed)}`;
 
-    card.querySelector(`#chk-${t.id}`).addEventListener("change", (e)=>{
-      state[t.id] = state[t.id] || {};
-      state[t.id].done = e.target.checked;
-      save(); render();
-    });
-
-    const note = card.querySelector(`#note-${t.id}`);
-    note.value = s.note || "";
-    note.addEventListener("input", (e)=>{
-      state[t.id] = state[t.id] || {};
-      state[t.id].note = e.target.value;
-      save();
-    });
-  });
-}
-
-["input","change"].forEach(evt=>{
-  search.addEventListener(evt, render);
-  category.addEventListener(evt, render);
-  status.addEventListener(evt, render);
-});
-
-render();
+  // Milestone quotes
+  [25,50,75,100].forEach(m=>{
+    if (pct >= m && !state._shown[m]) {
+      alert(`${quotes[m]}\n\nProgress: ${pct}% • Time
