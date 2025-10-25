@@ -3,31 +3,104 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Codetracker</title>
-  <meta name="description" content="Track progress across 50 HTML & CSS lessons.">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23111'/%3E%3Ctext x='50%25' y='50%25' font-size='28' font-family='monospace' fill='%23fff' text-anchor='middle' dominant-baseline='middle'%3E%3C/%3E%3E'>
+  <title>Code Tracker • Notion Style</title>
+  <!-- Link external CSS -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="wrap">
-    <h1>Code Tracker</h1>
-    <div class="controls">
-      <input id="search" type="search" placeholder="Search projects…" class="control"/>
-      <select id="category" class="control">
-        <option value="all">All categories</option>
-        <option value="html">HTML‑only (1–30)</option>
-        <option value="css">CSS roadmap (31–50)</option>
-      </select>
-      <select id="status" class="control">
-        <option value="all">All status</option>
-        <option value="done">Completed</option>
-        <option value="todo">Not completed</option>
-      </select>
-    </div>
-    <div class="stats"><span id="count"></span> • <span id="ratio"></span></div>
-    <div class="bar"><span id="barFill"></span></div>
-    <div class="grid" id="grid"></div>
+    <header>
+      <h1>Code Tracker</h1>
+      <div class="subtitle">Plan, build, and check off items. Clean Notion style with icons, filters, and progress.</div>
+      <div class="controls">
+        <div class="control" style="flex:2">
+          <span class="icon" aria-hidden="true" data-icon="search"></span>
+          <input id="search" type="search" placeholder="Search (title, #id, tag)"/>
+        </div>
+        <div class="control" style="flex:1">
+          <span class="icon" aria-hidden="true" data-icon="filter"></span>
+          <select id="category">
+            <option value="all">All categories</option>
+            <option value="foundation">Foundation</option>
+            <option value="frontend">Frontend</option>
+            <option value="backend">Backend</option>
+            <option value="project">Project work</option>
+          </select>
+        </div>
+        <div class="control" style="flex:1">
+          <span class="icon" aria-hidden="true" data-icon="check"></span>
+          <select id="status">
+            <option value="all">All status</option>
+            <option value="todo">Not completed</option>
+            <option value="done">Completed</option>
+          </select>
+        </div>
+        <button id="reset" class="btn warn" title="Clear local progress">
+          <span class="icon" data-icon="trash"></span> Reset
+        </button>
+        <button id="export" class="btn" title="Download JSON">
+          <span class="icon" data-icon="download"></span> Export
+        </button>
+        <button id="importBtn" class="btn" title="Import JSON">
+          <span class="icon" data-icon="upload"></span> Import
+        </button>
+        <input id="importFile" type="file" accept="application/json" class="hidden" />
+      </div>
+      <div class="stats">
+        <span id="count"></span>
+        <span id="ratio" class="pill"></span>
+        <span id="time" class="pill"></span>
+      </div>
+      <div class="kbar">
+        <span class="icon" data-icon="sparkles"></span>
+        <span id="tips">Tip: Add your live links to notes for quick access.</span>
+      </div>
+      <div class="bar"><span id="barFill"></span></div>
+    </header>
+
+    <!-- Collapsible sections -->
+    <section class="section" data-section="foundation">
+      <header class="toggle" data-toggle>
+        <span class="icon" data-icon="folder"></span>
+        <strong>Foundation</strong>
+        <span class="meta">(HTML/CSS/JS basics)</span>
+      </header>
+      <div class="grid" id="grid-foundation"></div>
+    </section>
+
+    <section class="section" data-section="frontend">
+      <header class="toggle" data-toggle>
+        <span class="icon" data-icon="layout"></span>
+        <strong>Frontend</strong>
+        <span class="meta">(UI components, layouts)</span>
+      </header>
+      <div class="grid" id="grid-frontend"></div>
+    </section>
+
+    <section class="section" data-section="backend">
+      <header class="toggle" data-toggle>
+        <span class="icon" data-icon="database"></span>
+        <strong>Backend</strong>
+        <span class="meta">(APIs, auth — placeholder tasks)</span>
+      </header>
+      <div class="grid" id="grid-backend"></div>
+    </section>
+
+    <section class="section" data-section="project">
+      <header class="toggle" data-toggle>
+        <span class="icon" data-icon="flag"></span>
+        <strong>Project work</strong>
+        <span class="meta">(Milestones, capstones)</span>
+      </header>
+      <div class="grid" id="grid-project"></div>
+    </section>
+
+    <footer>
+      Data is saved locally (localStorage). Export a backup if you switch browsers/devices.
+    </footer>
   </div>
-  <script src="script.js" defer></script>
+
+  <!-- Link external JS -->
+  <script src="script.js"></script>
 </body>
 </html>
